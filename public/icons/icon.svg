@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BlockBot">
+  <rect width="512" height="512" rx="112" fill="#101a2e"/>
+  <path d="M80 176h352M80 336h352M176 80v352M336 80v352" stroke="#2b3b5c" stroke-width="10"/>
+  <rect x="160" y="192" width="192" height="160" rx="48" fill="#57d3a5"/>
+  <circle cx="216" cy="256" r="21" fill="#101a2e"/>
+  <circle cx="296" cy="256" r="21" fill="#101a2e"/>
+  <path d="M224 304h64" stroke="#101a2e" stroke-width="16" stroke-linecap="round"/>
+  <path d="M256 144v48M256 352v48" stroke="#ffb648" stroke-width="24" stroke-linecap="round"/>
+  <path d="M368 256h64" stroke="#ffb648" stroke-width="24" stroke-linecap="round"/>
+</svg>

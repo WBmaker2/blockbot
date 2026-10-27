@@ -1,0 +1,159 @@
+[
+  {
+    "id": "first-steps",
+    "titleKo": "첫걸음",
+    "subtitleKo": "로봇을 목표까지 곧장 보내요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 2, "dir": "E" },
+    "goal": { "x": 3, "z": 2 },
+    "walls": [],
+    "allowedBlocks": ["move"],
+    "parBlocks": 3,
+    "hintKo": "앞으로 블록을 세 번 이어 붙여 보세요.",
+    "explanationKo": "프로그램은 위에서 아래로 한 줄씩 실행돼요. 앞으로 블록 세 개가 로봇을 목표까지 데려갔어요.",
+    "solution": "move\nmove\nmove"
+  },
+  {
+    "id": "turn-right",
+    "titleKo": "방향을 바꿔요",
+    "subtitleKo": "오른쪽으로 돌아 남쪽 길로 가요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 1, "z": 1, "dir": "E" },
+    "goal": { "x": 1, "z": 3 },
+    "walls": [],
+    "allowedBlocks": ["move", "turn_right"],
+    "parBlocks": 3,
+    "hintKo": "먼저 오른쪽으로 돌면 남쪽을 바라보게 돼요.",
+    "explanationKo": "회전 블록은 로봇이 서 있는 칸을 바꾸지 않고 바라보는 방향만 바꿔요. 오른쪽으로 돌면 동쪽에서 남쪽으로 방향이 바뀌어요.",
+    "solution": "right\nmove\nmove"
+  },
+  {
+    "id": "repeat-power",
+    "titleKo": "반복의 힘",
+    "subtitleKo": "같은 동작은 한 번만 써요",
+    "grid": { "width": 6, "depth": 6 },
+    "robot": { "x": 0, "z": 0, "dir": "E" },
+    "goal": { "x": 5, "z": 0 },
+    "walls": [],
+    "allowedBlocks": ["move", "repeat"],
+    "parBlocks": 2,
+    "hintKo": "앞으로 블록 다섯 개를 반복 블록 하나에 넣어 보세요.",
+    "explanationKo": "반복 블록은 안에 있는 동작을 정한 횟수만큼 실행해요. 블록 수는 5개에서 2개로 줄었지만 로봇의 움직임은 같아요.",
+    "solution": "repeat 5 { move }"
+  },
+  {
+    "id": "l-shape",
+    "titleKo": "ㄱ자 길",
+    "subtitleKo": "동쪽으로 간 뒤 북쪽으로 꺾어요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 4, "dir": "E" },
+    "goal": { "x": 3, "z": 2 },
+    "walls": [],
+    "allowedBlocks": ["move", "turn_left", "repeat"],
+    "parBlocks": 5,
+    "hintKo": "동쪽으로 세 칸, 왼쪽으로 돌고 북쪽으로 두 칸이에요.",
+    "explanationKo": "반복은 같은 방향으로 여러 칸 갈 때 아주 유용해요. 방향이 바뀌면 새로운 반복을 시작하면 됩니다.",
+    "solution": "repeat 3 { move }\nleft\nrepeat 2 { move }"
+  },
+  {
+    "id": "wall-ahead",
+    "titleKo": "벽을 만나면",
+    "subtitleKo": "벽을 확인하고 오른쪽으로 피해요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 0, "dir": "E" },
+    "goal": { "x": 2, "z": 2 },
+    "walls": [
+      { "x": 2, "z": 0 },
+      { "x": 0, "z": 1 }
+    ],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall"],
+    "parBlocks": 7,
+    "hintKo": "한 칸 간 뒤 벽이 보이면 오른쪽으로 돌아 남쪽으로 내려가세요.",
+    "explanationKo": "벽 확인 블록은 로봇 앞 칸을 살펴봐요. 벽이 있으면 참 가지를, 없으면 거짓 가지를 실행해요. 여기서는 벽이 있어서 오른쪽으로 돌았어요.",
+    "solution": "move\nif wall { right }\nrepeat 2 { move }\nleft\nmove"
+  },
+  {
+    "id": "goal-check",
+    "titleKo": "목표를 확인해요",
+    "subtitleKo": "한 칸 앞이 목표인지 살펴봐요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 2, "dir": "E" },
+    "goal": { "x": 2, "z": 2 },
+    "walls": [{ "x": 3, "z": 2 }],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "if_goal"],
+    "parBlocks": 4,
+    "hintKo": "한 칸 간 뒤, 앞 칸이 목표인지 확인하고 움직이세요.",
+    "explanationKo": "목표 확인 블록은 로봇 바로 앞 칸이 목표인지 살펴봐요. 목표가 있으면 참 가지에서 한 칸 더 움직여 도착했어요.",
+    "solution": "move\nif goal { move } else { left }"
+  },
+  {
+    "id": "nested-repeat",
+    "titleKo": "두 번 접기",
+    "subtitleKo": "반복 안에 반복을 넣어요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 0, "dir": "E" },
+    "goal": { "x": 2, "z": 2 },
+    "walls": [],
+    "allowedBlocks": ["move", "turn_right", "repeat"],
+    "parBlocks": 4,
+    "hintKo": "바깥 반복 안에 작은 반복과 오른쪽 회전을 넣어 보세요.",
+    "explanationKo": "바깥 반복이 두 번 실행되고, 그때마다 안쪽 반복이 두 칸씩 움직여요. 반복을 겹치면 짧은 블록으로 긴 경로를 만들 수 있어요.",
+    "solution": "repeat 2 { repeat 2 { move } right }"
+  },
+  {
+    "id": "wall-follow",
+    "titleKo": "벽을 따라",
+    "subtitleKo": "막히면 돌아서 계속 가요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 0, "dir": "E" },
+    "goal": { "x": 2, "z": 4 },
+    "walls": [
+      { "x": 3, "z": 0 },
+      { "x": 3, "z": 1 }
+    ],
+    "allowedBlocks": ["move", "turn_right", "repeat", "if_wall"],
+    "parBlocks": 6,
+    "hintKo": "벽이 나올 때까지 두 칸, 그다음 아래로 네 칸이에요.",
+    "explanationKo": "벽 확인은 실행 중인 로봇의 위치와 방향을 기준으로 해요. 같은 블록도 로봇이 어디를 보느냐에 따라 결과가 달라져요.",
+    "solution": "repeat 2 { move }\nif wall { right }\nrepeat 4 { move }"
+  },
+  {
+    "id": "choose-path",
+    "titleKo": "선택의 길",
+    "subtitleKo": "벽이 있을 때와 없을 때를 나눠요",
+    "grid": { "width": 5, "depth": 5 },
+    "robot": { "x": 0, "z": 0, "dir": "E" },
+    "goal": { "x": 4, "z": 0 },
+    "walls": [
+      { "x": 2, "z": 0 },
+      { "x": 0, "z": 1 },
+      { "x": 1, "z": 3 }
+    ],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall"],
+    "parBlocks": 10,
+    "hintKo": "벽을 만나면 아래로 피하고, 다시 동쪽으로 돌아 목표까지 가세요.",
+    "explanationKo": "조건 블록은 상황을 확인한 뒤 한쪽 길만 골라요. 벽이 있어서 참 가지가 실행되었고, 오른쪽으로 돌아 벽을 피했어요.",
+    "solution": "move\nif wall { right } else { move }\nmove\nleft\nrepeat 3 { move }\nleft\nmove"
+  },
+  {
+    "id": "final-maze",
+    "titleKo": "마지막 미로",
+    "subtitleKo": "배운 블록을 모두 모아 탈출해요",
+    "grid": { "width": 6, "depth": 6 },
+    "robot": { "x": 0, "z": 0, "dir": "E" },
+    "goal": { "x": 5, "z": 5 },
+    "walls": [
+      { "x": 3, "z": 0 },
+      { "x": 3, "z": 1 },
+      { "x": 0, "z": 3 },
+      { "x": 1, "z": 3 },
+      { "x": 2, "z": 3 },
+      { "x": 4, "z": 4 }
+    ],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall", "if_goal"],
+    "parBlocks": 11,
+    "hintKo": "동쪽 두 칸, 남쪽 두 칸, 동쪽 세 칸, 다시 남쪽 세 칸이에요.",
+    "explanationKo": "긴 경로를 짧은 반복 네 개로 나눴어요. 프로그램을 작은 구간으로 나누면 디버깅하기도 쉬워져요.",
+    "solution": "repeat 2 { move }\nright\nrepeat 2 { move }\nleft\nrepeat 3 { move }\nright\nrepeat 3 { move }"
+  }
+]
