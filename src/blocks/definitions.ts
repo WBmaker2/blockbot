@@ -47,7 +47,7 @@ export function defineBlockBotBlocks(): void {
           precision: 1
         }
       ],
-      message1: '실행',
+      message1: '실행 %1',
       args1: [{ type: 'input_statement', name: 'DO' }],
       previousStatement: null,
       nextStatement: null,
@@ -60,7 +60,7 @@ export function defineBlockBotBlocks(): void {
       message0: '만약 앞에 벽이 있으면',
       message1: '%1',
       args1: [{ type: 'input_statement', name: 'DO' }],
-      message2: '아니면',
+      message2: '아니면 %1',
       args2: [{ type: 'input_statement', name: 'ELSE' }],
       previousStatement: null,
       nextStatement: null,
@@ -73,7 +73,7 @@ export function defineBlockBotBlocks(): void {
       message0: '만약 앞에 목표가 있으면',
       message1: '%1',
       args1: [{ type: 'input_statement', name: 'DO' }],
-      message2: '아니면',
+      message2: '아니면 %1',
       args2: [{ type: 'input_statement', name: 'ELSE' }],
       previousStatement: null,
       nextStatement: null,

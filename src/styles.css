@@ -565,6 +565,49 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+.palette-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 253, 248, 0.7);
+  color: var(--ink-soft);
+  font-size: 10.5px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+
+.palette-toggle:hover {
+  border-color: var(--line-strong);
+  background: var(--card);
+}
+
+.palette-toggle.is-collapsed {
+  border-color: rgba(87, 211, 165, 0.55);
+  background: rgba(87, 211, 165, 0.13);
+  color: var(--mint-deep);
+}
+
+.palette-toggle__icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.blocklyFlyoutLabelText {
+  fill: #9fb1cc;
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
 .block-count {
   padding: 4px 9px;
   border-radius: 99px;
@@ -1834,6 +1877,15 @@ html.reduced-motion *::after {
 
   .mode-tab {
     padding: 5px 12px;
+  }
+
+  .palette-toggle {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+
+  .palette-toggle__icon {
+    display: none;
   }
 
   .world-stage {

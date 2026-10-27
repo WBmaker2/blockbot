@@ -76,6 +76,7 @@ export class App {
   private robot: RobotState;
   private blockEditor: BlockEditor | null = null;
   private mode: Mode = 'blocks';
+  private paletteVisible = true;
   private textSeeded = false;
   private status: UiStatus = 'idle';
   private actions: Action[] = [];
@@ -154,6 +155,7 @@ export class App {
       this.speed = (this.refs.speedSelect.value as Speed) || 'normal';
     });
 
+    this.refs.paletteToggle.addEventListener('click', () => this.togglePalette());
     this.refs.hintButton.addEventListener('click', () => this.toggleHint());
     this.refs.successNext.addEventListener('click', () => this.goToNextChallenge());
     this.refs.successRetry.addEventListener('click', () => {
@@ -300,10 +302,16 @@ export class App {
       button.setAttribute('aria-selected', String(selected));
       button.tabIndex = selected ? 0 : -1;
     }
+    this.refs.paletteToggle.hidden = !blocks;
     if (blocks) {
       this.ensureBlockEditor();
-      window.setTimeout(() => this.blockEditor?.resize(), 30);
+      this.blockEditor?.setPaletteVisible(this.paletteVisible);
+      window.setTimeout(() => {
+        this.blockEditor?.resize();
+        this.blockEditor?.setPaletteVisible(this.paletteVisible);
+      }, 30);
     }
+    this.updatePaletteToggle();
   }
 
   private ensureBlockEditor(): void {
@@ -312,8 +320,11 @@ export class App {
     try {
       this.blockEditor = new BlockEditor(this.refs.blocklyHost, this.challenge, {
         initialWorkspace: this.progress.workspaces[this.challenge.id] ?? null,
+        paletteVisible: this.paletteVisible,
         onChange: () => this.handleBlockChange()
       });
+      this.blockEditor.setPaletteVisible(this.paletteVisible);
+      this.updatePaletteToggle();
     } catch {
       this.showToast('블록 편집기를 불러오지 못했어요. 새로고침해 주세요.');
     }
@@ -765,6 +776,23 @@ export class App {
     if (!next) return;
     next.focus();
     activate(next);
+  }
+
+  private togglePalette(): void {
+    this.paletteVisible = !this.paletteVisible;
+    this.blockEditor?.setPaletteVisible(this.paletteVisible);
+    this.updatePaletteToggle();
+  }
+
+  private updatePaletteToggle(): void {
+    const visible = this.paletteVisible;
+    this.refs.paletteToggle.classList.toggle('is-collapsed', !visible);
+    this.refs.paletteToggle.setAttribute('aria-expanded', String(visible));
+    this.refs.paletteToggle.setAttribute(
+      'aria-label',
+      visible ? '코딩 블록 숨기기' : '코딩 블록 펼치기'
+    );
+    this.refs.paletteToggleLabel.textContent = visible ? '블록 숨기기' : '블록 펼치기';
   }
 
   private toggleHint(): void {

@@ -15,16 +15,17 @@ async function switchToText(page: Page, code: string): Promise<void> {
   await expect(page.locator('#text-error')).toHaveText('');
 }
 
-async function openCategory(page: Page): Promise<void> {
-  const flyout = page.locator('.blocklyToolboxFlyout');
+async function ensurePaletteOpen(page: Page): Promise<void> {
+  const flyout = page.locator('.blocklyFlyout:not(.blocklyTrashcanFlyout)');
   if (!(await flyout.isVisible())) {
-    await page.locator('.blocklyToolboxCategory').first().click();
+    await page.locator('#palette-toggle').click();
   }
   await expect(flyout).toBeVisible();
+  await expect(page.locator('#palette-toggle')).toHaveAttribute('aria-expanded', 'true');
 }
 
 async function dragMoveBlock(page: Page, x: number, y: number): Promise<void> {
-  await openCategory(page);
+  await ensurePaletteOpen(page);
   const block = page.locator('.blocklyFlyout .blocklyDraggable').first();
   const box = await block.boundingBox();
   if (!box) throw new Error('Flyout block has no bounding box');
@@ -50,6 +51,35 @@ async function tabTo(page: Page, selector: string): Promise<void> {
 test.describe('BlockBot play flow', () => {
   test.beforeEach(async ({ page }) => {
     await prepare(page);
+  });
+
+  test('shows coding blocks by default and toggles the palette', async ({ page }) => {
+    const flyout = page.locator('.blocklyFlyout:not(.blocklyTrashcanFlyout)');
+    await expect(flyout).toBeVisible();
+    await expect(page.locator('.blocklyFlyoutLabelText')).toHaveText('동작');
+    await expect(page.locator('.blocklyFlyout .blocklyDraggable')).toHaveCount(1);
+    await expect(page.locator('#palette-toggle')).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('#palette-toggle')).toContainText('블록 숨기기');
+
+    await page.locator('#palette-toggle').click();
+    await expect(flyout).toBeHidden();
+    await expect(page.locator('#palette-toggle')).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('#palette-toggle')).toContainText('블록 펼치기');
+
+    await page.locator('#palette-toggle').click();
+    await expect(flyout).toBeVisible();
+    await expect(page.locator('.blocklyFlyout .blocklyDraggable')).toHaveCount(1);
+  });
+
+  test('shows repeat and condition blocks without an editor error', async ({ page }) => {
+    await page.locator('#open-challenges').click();
+    await page.locator('.challenge-card', { hasText: '마지막 미로' }).click();
+
+    await expect(page.locator('#challenge-title')).toHaveText('마지막 미로');
+    await expect(page.locator('#block-count')).toContainText('블록 0 · 기준 11');
+    await expect(page.locator('.blocklyFlyoutLabelText')).toHaveText(['동작', '반복', '조건']);
+    await expect(page.locator('.blocklyFlyout .blocklyDraggable')).toHaveCount(6);
+    await expect(page.locator('.toast')).toHaveCount(0);
   });
 
   test('drags move blocks into the workspace and solves the first challenge', async ({ page }) => {

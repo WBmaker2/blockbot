@@ -13,6 +13,7 @@ Blockly.setLocale(koMessages);
 export interface BlockEditorOptions {
   initialWorkspace?: object | null;
   onChange?: () => void;
+  paletteVisible?: boolean;
 }
 
 export class BlockEditor {
@@ -20,15 +21,17 @@ export class BlockEditor {
   private readonly container: HTMLElement;
   private disposed = false;
   private arrangeTimer: number | null = null;
+  private readonly ariaObserver: MutationObserver;
 
   constructor(container: HTMLElement, challenge: Challenge, options: BlockEditorOptions = {}) {
     this.container = container;
     defineBlockBotBlocks();
+    const toolbox = buildToolbox(challenge);
 
     this.workspace = Blockly.inject(container, {
       renderer: 'zelos',
       theme: blockbotTheme,
-      toolbox: buildToolbox(challenge),
+      toolbox,
       trashcan: true,
       sounds: false,
       grid: {
@@ -52,6 +55,12 @@ export class BlockEditor {
       }
     });
 
+    const flyout = this.workspace.getFlyout();
+    if (flyout) {
+      flyout.show(toolbox.contents);
+      flyout.setVisible(options.paletteVisible ?? true);
+    }
+
     if (options.initialWorkspace) {
       try {
         Blockly.serialization.workspaces.load(options.initialWorkspace, this.workspace);
@@ -65,6 +74,15 @@ export class BlockEditor {
       options.onChange?.();
       this.scheduleOverlapCheck();
     });
+
+    this.ariaObserver = new MutationObserver(() => this.markDecorativePaths());
+    this.ariaObserver.observe(this.workspace.getInjectionDiv(), {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['role']
+    });
+    this.markDecorativePaths();
 
     window.setTimeout(() => {
       this.resize();
@@ -97,12 +115,34 @@ export class BlockEditor {
     this.workspace.getCanvas().focus();
   }
 
+  setPaletteVisible(visible: boolean): void {
+    const flyout = this.workspace.getFlyout();
+    if (!flyout) return;
+    flyout.setVisible(visible);
+    this.resize();
+  }
+
+  isPaletteVisible(): boolean {
+    return this.workspace.getFlyout()?.isVisible() ?? false;
+  }
+
   dispose(): void {
     if (this.disposed) return;
     this.disposed = true;
     if (this.arrangeTimer !== null) window.clearTimeout(this.arrangeTimer);
+    this.ariaObserver.disconnect();
     this.workspace.dispose();
     this.container.innerHTML = '';
+  }
+
+  private markDecorativePaths(): void {
+    for (const path of this.container.querySelectorAll<SVGElement>(
+      '.blocklyHighlightedConnectionPath'
+    )) {
+      path.setAttribute('aria-hidden', 'true');
+      path.removeAttribute('role');
+      path.removeAttribute('aria-roledescription');
+    }
   }
 
   private scheduleOverlapCheck(): void {

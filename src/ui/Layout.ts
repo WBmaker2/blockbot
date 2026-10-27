@@ -9,6 +9,8 @@ export interface LayoutRefs {
   codeInput: HTMLTextAreaElement;
   textError: HTMLElement;
   blockCount: HTMLElement;
+  paletteToggle: HTMLButtonElement;
+  paletteToggleLabel: HTMLElement;
   modeButtons: HTMLButtonElement[];
   mobilePanelButtons: HTMLButtonElement[];
   editorPanel: HTMLElement;
@@ -103,6 +105,10 @@ export function createLayout(root: HTMLElement): LayoutRefs {
               <button class="mode-tab" type="button" data-mode="text" role="tab" aria-selected="false">텍스트</button>
             </div>
             <div class="panel__meta">
+              <button class="palette-toggle" id="palette-toggle" type="button" aria-controls="blockly-host" aria-expanded="true" aria-label="코딩 블록 숨기기">
+                <span class="palette-toggle__icon" aria-hidden="true">▤</span>
+                <span class="palette-toggle__label" id="palette-toggle-label">블록 숨기기</span>
+              </button>
               <span class="block-count" id="block-count">블록 0 · 기준 3</span>
             </div>
           </div>
@@ -236,6 +242,8 @@ export function createLayout(root: HTMLElement): LayoutRefs {
     codeInput: select(root, '#code-input'),
     textError: select(root, '#text-error'),
     blockCount: select(root, '#block-count'),
+    paletteToggle: select(root, '#palette-toggle'),
+    paletteToggleLabel: select(root, '#palette-toggle-label'),
     modeButtons: Array.from(root.querySelectorAll<HTMLButtonElement>('[data-mode]')),
     mobilePanelButtons: Array.from(root.querySelectorAll<HTMLButtonElement>('[data-mobile-panel]')),
     editorPanel: select(root, '#editor-panel'),
