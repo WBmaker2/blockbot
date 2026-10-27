@@ -6,7 +6,9 @@ import { DEFAULT_LIMITS } from '../../src/lang/limits';
 function challenge(overrides: Partial<Challenge> = {}): Challenge {
   return {
     id: 'test',
+    stage: 'sequence',
     titleKo: '테스트',
+    learningGoalKo: '테스트 목표',
     grid: { width: 5, depth: 5 },
     robot: { x: 0, z: 0, dir: 'E' },
     goal: { x: 4, z: 0 },

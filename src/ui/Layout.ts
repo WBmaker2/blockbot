@@ -3,6 +3,8 @@ export interface LayoutRefs {
   challengeTitle: HTMLElement;
   challengeSubtitle: HTMLElement;
   challengeNumber: HTMLElement;
+  stageChip: HTMLElement;
+  learningGoal: HTMLElement;
   progressCount: HTMLElement;
   blocklyHost: HTMLElement;
   textEditor: HTMLElement;
@@ -154,8 +156,9 @@ export function createLayout(root: HTMLElement): LayoutRefs {
 
           <div class="challenge-brief">
             <div class="challenge-brief__text">
+              <span class="stage-chip" id="stage-chip">1단계 · 순차</span>
               <h1 id="challenge-subtitle">로봇을 목표까지 곧장 보내요</h1>
-              <p>로봇이 목표 칸에 도착하면 성공이에요.</p>
+              <p id="learning-goal">명령을 차례대로 실행해요.</p>
             </div>
             <button class="btn btn--hint" id="hint-button" type="button" disabled>힌트 보기</button>
           </div>
@@ -202,7 +205,7 @@ export function createLayout(root: HTMLElement): LayoutRefs {
         </div>
         <button class="icon-btn" id="challenges-close" type="button" aria-label="닫기">✕</button>
       </div>
-      <div class="challenge-grid" id="challenge-list"></div>
+      <div class="challenge-stages" id="challenge-list"></div>
     </dialog>
 
     <dialog class="sheet sheet--teacher" id="teacher-dialog" aria-labelledby="teacher-heading">
@@ -236,6 +239,8 @@ export function createLayout(root: HTMLElement): LayoutRefs {
     challengeTitle: select(root, '#challenge-title'),
     challengeSubtitle: select(root, '#challenge-subtitle'),
     challengeNumber: select(root, '#challenge-number'),
+    stageChip: select(root, '#stage-chip'),
+    learningGoal: select(root, '#learning-goal'),
     progressCount: select(root, '#progress-count'),
     blocklyHost: select(root, '#blockly-host'),
     textEditor: select(root, '#text-editor'),

@@ -1,11 +1,23 @@
 [
   {
     "id": "first-steps",
+    "stage": "sequence",
     "titleKo": "첫걸음",
     "subtitleKo": "로봇을 목표까지 곧장 보내요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 2, "dir": "E" },
-    "goal": { "x": 3, "z": 2 },
+    "learningGoalKo": "명령을 위에서 아래로 차례대로 실행하면 로봇이 움직여요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 2,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 3,
+      "z": 2
+    },
     "walls": [],
     "allowedBlocks": ["move"],
     "parBlocks": 3,
@@ -15,11 +27,23 @@
   },
   {
     "id": "turn-right",
+    "stage": "sequence",
     "titleKo": "방향을 바꿔요",
     "subtitleKo": "오른쪽으로 돌아 남쪽 길로 가요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 1, "z": 1, "dir": "E" },
-    "goal": { "x": 1, "z": 3 },
+    "learningGoalKo": "회전과 이동을 순서대로 연결할 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 1,
+      "z": 1,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 1,
+      "z": 3
+    },
     "walls": [],
     "allowedBlocks": ["move", "turn_right"],
     "parBlocks": 3,
@@ -28,12 +52,50 @@
     "solution": "right\nmove\nmove"
   },
   {
+    "id": "double-turn",
+    "stage": "sequence",
+    "titleKo": "두 번 꺾기",
+    "subtitleKo": "동쪽, 남쪽, 서쪽으로 차례로",
+    "learningGoalKo": "여러 번 방향을 바꾸며 긴 순서를 만들 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 1,
+      "z": 2
+    },
+    "walls": [],
+    "allowedBlocks": ["move", "turn_right"],
+    "parBlocks": 7,
+    "hintKo": "동쪽으로 두 칸, 남쪽으로 두 칸, 서쪽으로 한 칸 움직여요.",
+    "explanationKo": "이동 블록은 그 앞에 어떤 회전 블록이 있느냐에 따라 다른 방향으로 실행돼요. 순서를 잘 읽으면 긴 경로도 만들 수 있어요.",
+    "solution": "move\nmove\nright\nmove\nmove\nright\nmove"
+  },
+  {
     "id": "repeat-power",
+    "stage": "repeat",
     "titleKo": "반복의 힘",
     "subtitleKo": "같은 동작은 한 번만 써요",
-    "grid": { "width": 6, "depth": 6 },
-    "robot": { "x": 0, "z": 0, "dir": "E" },
-    "goal": { "x": 5, "z": 0 },
+    "learningGoalKo": "같은 이동을 반복 블록 하나로 줄일 수 있어요.",
+    "grid": {
+      "width": 6,
+      "depth": 6
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 5,
+      "z": 0
+    },
     "walls": [],
     "allowedBlocks": ["move", "repeat"],
     "parBlocks": 2,
@@ -43,11 +105,23 @@
   },
   {
     "id": "l-shape",
+    "stage": "repeat",
     "titleKo": "ㄱ자 길",
     "subtitleKo": "동쪽으로 간 뒤 북쪽으로 꺾어요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 4, "dir": "E" },
-    "goal": { "x": 3, "z": 2 },
+    "learningGoalKo": "반복이 끝난 뒤 방향을 바꾸고 다시 반복할 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 4,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 3,
+      "z": 2
+    },
     "walls": [],
     "allowedBlocks": ["move", "turn_left", "repeat"],
     "parBlocks": 5,
@@ -56,15 +130,85 @@
     "solution": "repeat 3 { move }\nleft\nrepeat 2 { move }"
   },
   {
+    "id": "stair-steps",
+    "stage": "repeat",
+    "titleKo": "계단 오르기",
+    "subtitleKo": "이동과 회전을 한 묶음으로",
+    "learningGoalKo": "반복 안에 여러 동작을 넣어 같은 모양을 반복할 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 2,
+      "z": 2
+    },
+    "walls": [],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "repeat"],
+    "parBlocks": 5,
+    "hintKo": "앞으로, 오른쪽, 앞으로, 왼쪽을 한 묶음으로 보고 두 번 반복해요.",
+    "explanationKo": "반복 블록 안에는 이동과 회전을 함께 넣을 수 있어요. 한 묶음이 두 번 실행되면서 계단 모양 경로가 만들어졌어요.",
+    "solution": "repeat 2 { move right move left }"
+  },
+  {
+    "id": "nested-repeat",
+    "stage": "repeat",
+    "titleKo": "두 번 접기",
+    "subtitleKo": "반복 안에 반복을 넣어요",
+    "learningGoalKo": "반복 안에 반복을 넣어 더 짧게 표현할 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 2,
+      "z": 2
+    },
+    "walls": [],
+    "allowedBlocks": ["move", "turn_right", "repeat"],
+    "parBlocks": 4,
+    "hintKo": "바깥 반복 안에 작은 반복과 오른쪽 회전을 넣어 보세요.",
+    "explanationKo": "바깥 반복이 두 번 실행되고, 그때마다 안쪽 반복이 두 칸씩 움직여요. 반복을 겹치면 짧은 블록으로 긴 경로를 만들 수 있어요.",
+    "solution": "repeat 2 { repeat 2 { move } right }"
+  },
+  {
     "id": "wall-ahead",
+    "stage": "choice",
     "titleKo": "벽을 만나면",
     "subtitleKo": "벽을 확인하고 오른쪽으로 피해요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 0, "dir": "E" },
-    "goal": { "x": 2, "z": 2 },
+    "learningGoalKo": "앞에 벽이 있는지 확인하고 참/거짓 가지를 고를 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 2,
+      "z": 2
+    },
     "walls": [
-      { "x": 2, "z": 0 },
-      { "x": 0, "z": 1 }
+      {
+        "x": 2,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": 1
+      }
     ],
     "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall"],
     "parBlocks": 7,
@@ -74,12 +218,29 @@
   },
   {
     "id": "goal-check",
+    "stage": "choice",
     "titleKo": "목표를 확인해요",
     "subtitleKo": "한 칸 앞이 목표인지 살펴봐요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 2, "dir": "E" },
-    "goal": { "x": 2, "z": 2 },
-    "walls": [{ "x": 3, "z": 2 }],
+    "learningGoalKo": "목표가 앞에 있는지 확인해 맞는 동작을 고를 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 2,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 2,
+      "z": 2
+    },
+    "walls": [
+      {
+        "x": 3,
+        "z": 2
+      }
+    ],
     "allowedBlocks": ["move", "turn_left", "turn_right", "if_goal"],
     "parBlocks": 4,
     "hintKo": "한 칸 간 뒤, 앞 칸이 목표인지 확인하고 움직이세요.",
@@ -87,29 +248,68 @@
     "solution": "move\nif goal { move } else { left }"
   },
   {
-    "id": "nested-repeat",
-    "titleKo": "두 번 접기",
-    "subtitleKo": "반복 안에 반복을 넣어요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 0, "dir": "E" },
-    "goal": { "x": 2, "z": 2 },
-    "walls": [],
-    "allowedBlocks": ["move", "turn_right", "repeat"],
-    "parBlocks": 4,
-    "hintKo": "바깥 반복 안에 작은 반복과 오른쪽 회전을 넣어 보세요.",
-    "explanationKo": "바깥 반복이 두 번 실행되고, 그때마다 안쪽 반복이 두 칸씩 움직여요. 반복을 겹치면 짧은 블록으로 긴 경로를 만들 수 있어요.",
-    "solution": "repeat 2 { repeat 2 { move } right }"
+    "id": "goal-else",
+    "stage": "choice",
+    "titleKo": "목표를 두 번 확인해요",
+    "subtitleKo": "같은 확인 블록, 다른 결과",
+    "learningGoalKo": "같은 조건 블록도 로봇의 위치에 따라 다른 가지를 실행해요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 0,
+      "z": 2
+    },
+    "walls": [
+      {
+        "x": 3,
+        "z": 0
+      },
+      {
+        "x": 2,
+        "z": 3
+      }
+    ],
+    "allowedBlocks": ["move", "turn_right", "if_goal"],
+    "parBlocks": 6,
+    "hintKo": "처음에는 목표가 앞에 없고, 한 칸 내려온 뒤에는 목표가 앞에 있어요.",
+    "explanationKo": "로봇의 위치와 방향이 바뀌면 같은 목표 확인 블록도 다른 결과를 내요. 처음에는 거짓, 두 번째는 참이었어요.",
+    "solution": "if goal { move } else { right }\nmove\nif goal { move }"
   },
   {
     "id": "wall-follow",
+    "stage": "choice-loop",
     "titleKo": "벽을 따라",
     "subtitleKo": "막히면 돌아서 계속 가요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 0, "dir": "E" },
-    "goal": { "x": 2, "z": 4 },
+    "learningGoalKo": "벽을 만났을 때 방향을 바꾸고 계속 이동할 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 2,
+      "z": 4
+    },
     "walls": [
-      { "x": 3, "z": 0 },
-      { "x": 3, "z": 1 }
+      {
+        "x": 3,
+        "z": 0
+      },
+      {
+        "x": 3,
+        "z": 1
+      }
     ],
     "allowedBlocks": ["move", "turn_right", "repeat", "if_wall"],
     "parBlocks": 6,
@@ -119,15 +319,36 @@
   },
   {
     "id": "choose-path",
+    "stage": "choice-loop",
     "titleKo": "선택의 길",
     "subtitleKo": "벽이 있을 때와 없을 때를 나눠요",
-    "grid": { "width": 5, "depth": 5 },
-    "robot": { "x": 0, "z": 0, "dir": "E" },
-    "goal": { "x": 4, "z": 0 },
+    "learningGoalKo": "조건으로 길을 고른 뒤 반복으로 목표까지 이동할 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 4,
+      "z": 0
+    },
     "walls": [
-      { "x": 2, "z": 0 },
-      { "x": 0, "z": 1 },
-      { "x": 1, "z": 3 }
+      {
+        "x": 2,
+        "z": 0
+      },
+      {
+        "x": 0,
+        "z": 1
+      },
+      {
+        "x": 1,
+        "z": 3
+      }
     ],
     "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall"],
     "parBlocks": 10,
@@ -136,24 +357,144 @@
     "solution": "move\nif wall { right } else { move }\nmove\nleft\nrepeat 3 { move }\nleft\nmove"
   },
   {
+    "id": "repeat-choice",
+    "stage": "choice-loop",
+    "titleKo": "조건을 품은 반복",
+    "subtitleKo": "반복할 때마다 앞을 살펴요",
+    "learningGoalKo": "반복 안에서 조건을 확인해 경로를 바꿀 수 있어요.",
+    "grid": {
+      "width": 5,
+      "depth": 5
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 2,
+      "z": 2
+    },
+    "walls": [
+      {
+        "x": 2,
+        "z": 0
+      },
+      {
+        "x": 3,
+        "z": 1
+      }
+    ],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall"],
+    "parBlocks": 6,
+    "hintKo": "한 칸씩 움직일 때마다 앞의 벽을 확인해요. 벽이 있으면 오른쪽으로 돌아 내려가세요.",
+    "explanationKo": "반복 안에 조건을 넣으면 매번 로봇 앞을 새로 확인해요. 두 번 모두 벽이 있어서 참 가지가 실행됐어요.",
+    "solution": "repeat 2 { move if wall { right move left } }"
+  },
+  {
     "id": "final-maze",
+    "stage": "mixed",
     "titleKo": "마지막 미로",
     "subtitleKo": "배운 블록을 모두 모아 탈출해요",
-    "grid": { "width": 6, "depth": 6 },
-    "robot": { "x": 0, "z": 0, "dir": "E" },
-    "goal": { "x": 5, "z": 5 },
+    "learningGoalKo": "순차, 반복, 선택을 조합해 긴 경로를 해결할 수 있어요.",
+    "grid": {
+      "width": 6,
+      "depth": 6
+    },
+    "robot": {
+      "x": 0,
+      "z": 0,
+      "dir": "E"
+    },
+    "goal": {
+      "x": 5,
+      "z": 5
+    },
     "walls": [
-      { "x": 3, "z": 0 },
-      { "x": 3, "z": 1 },
-      { "x": 0, "z": 3 },
-      { "x": 1, "z": 3 },
-      { "x": 2, "z": 3 },
-      { "x": 4, "z": 4 }
+      {
+        "x": 3,
+        "z": 0
+      },
+      {
+        "x": 3,
+        "z": 1
+      },
+      {
+        "x": 0,
+        "z": 3
+      },
+      {
+        "x": 1,
+        "z": 3
+      },
+      {
+        "x": 2,
+        "z": 3
+      },
+      {
+        "x": 4,
+        "z": 4
+      }
     ],
     "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall", "if_goal"],
     "parBlocks": 11,
     "hintKo": "동쪽 두 칸, 남쪽 두 칸, 동쪽 세 칸, 다시 남쪽 세 칸이에요.",
     "explanationKo": "긴 경로를 짧은 반복 네 개로 나눴어요. 프로그램을 작은 구간으로 나누면 디버깅하기도 쉬워져요.",
     "solution": "repeat 2 { move }\nright\nrepeat 2 { move }\nleft\nrepeat 3 { move }\nright\nrepeat 3 { move }"
+  },
+  {
+    "id": "last-check",
+    "stage": "mixed",
+    "titleKo": "마지막 점검",
+    "subtitleKo": "벽을 확인하고 곧장 질주해요",
+    "learningGoalKo": "조건과 반복을 조합해 처음 보는 긴 경로도 해결할 수 있어요.",
+    "grid": {
+      "width": 6,
+      "depth": 6
+    },
+    "robot": {
+      "x": 0,
+      "z": 5,
+      "dir": "N"
+    },
+    "goal": {
+      "x": 5,
+      "z": 1
+    },
+    "walls": [
+      {
+        "x": 0,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "z": 5
+      },
+      {
+        "x": 1,
+        "z": 4
+      },
+      {
+        "x": 1,
+        "z": 3
+      },
+      {
+        "x": 1,
+        "z": 2
+      },
+      {
+        "x": 4,
+        "z": 0
+      },
+      {
+        "x": 5,
+        "z": 0
+      }
+    ],
+    "allowedBlocks": ["move", "turn_left", "turn_right", "repeat", "if_wall", "if_goal"],
+    "parBlocks": 6,
+    "hintKo": "위로 다섯 번 가면서 벽을 확인해요. 벽을 만나면 오른쪽으로 돌고, 그다음 다섯 칸을 쭉 가요.",
+    "explanationKo": "첫 번째 반복은 네 번 이동하고 마지막에 벽을 만나 방향을 바꿨어요. 두 번째 반복이 목표까지 한 번에 이동했어요.",
+    "solution": "repeat 5 { if wall { right } else { move } }\nrepeat 5 { move }"
   }
 ]

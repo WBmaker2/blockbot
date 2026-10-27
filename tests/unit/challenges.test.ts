@@ -5,16 +5,37 @@ import { executeProgram } from '../../src/lang/interpreter';
 import { parseTextProgram } from '../../src/lang/textMode';
 import { starsForBlockCount } from '../../src/features/challenges/scoring';
 import { BLOCK_TYPE_BY_NAME } from '../../src/features/challenges';
+import { STAGES, getStage } from '../../src/features/challenges/stages';
 
 describe('challenge content', () => {
-  it('ships ten unique challenges', () => {
-    expect(CHALLENGES).toHaveLength(10);
-    expect(new Set(CHALLENGES.map((challenge) => challenge.id)).size).toBe(10);
+  it('ships fifteen unique challenges in five stages', () => {
+    expect(CHALLENGES).toHaveLength(15);
+    expect(new Set(CHALLENGES.map((challenge) => challenge.id)).size).toBe(15);
+    expect(new Set(CHALLENGES.map((challenge) => challenge.stage)).size).toBe(5);
+  });
+
+  it('defines five ordered learning stages with goals', () => {
+    expect(STAGES.map((stage) => stage.order)).toEqual([1, 2, 3, 4, 5]);
+    expect(STAGES.map((stage) => stage.titleKo)).toEqual([
+      '순차',
+      '반복',
+      '선택',
+      '선택과 반복',
+      '종합'
+    ]);
+    for (const stage of STAGES) {
+      expect(stage.learningGoalKo.length).toBeGreaterThan(0);
+      expect(CHALLENGES.filter((challenge) => challenge.stage === stage.id).length).toBeGreaterThan(
+        0
+      );
+    }
   });
 
   for (const challenge of CHALLENGES) {
     it(`solves "${challenge.titleKo}" with its reference solution`, () => {
       expect(challenge.solution).toBeTruthy();
+      expect(getStage(challenge.stage).id).toBe(challenge.stage);
+      expect(challenge.learningGoalKo.length).toBeGreaterThan(0);
       const program = parseTextProgram(challenge.solution ?? '');
       const result = executeProgram(program, challenge);
       expect(result.error).toBeUndefined();

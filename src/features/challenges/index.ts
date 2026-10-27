@@ -2,6 +2,7 @@ import challengesJson from '../../data/challenges.json';
 import type { BlockType, Challenge } from '../../lang/ast';
 
 export const CHALLENGES = challengesJson as Challenge[];
+export { STAGES, getStage, type LearningStage, type StageId } from './stages';
 
 export const BLOCK_TYPE_BY_NAME: Record<string, BlockType> = {
   move: 'bb_move',

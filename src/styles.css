@@ -946,6 +946,39 @@ a {
   min-width: 0;
 }
 
+.stage-chip {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(87, 211, 165, 0.16);
+  color: #a8f2d8;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.stage-chip[data-stage='repeat'] {
+  background: rgba(255, 125, 92, 0.18);
+  color: #ffc2b1;
+}
+
+.stage-chip[data-stage='choice'] {
+  background: rgba(123, 140, 255, 0.2);
+  color: #ccd3ff;
+}
+
+.stage-chip[data-stage='choice-loop'] {
+  background: rgba(255, 182, 72, 0.18);
+  color: #ffdfa3;
+}
+
+.stage-chip[data-stage='mixed'] {
+  background: rgba(255, 250, 240, 0.16);
+  color: var(--cream);
+}
+
 .challenge-brief h1 {
   margin: 0;
   overflow: hidden;
@@ -1187,11 +1220,140 @@ a {
   padding: 18px 22px 24px;
 }
 
+.challenge-stages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 22px 24px;
+}
+
+.stage-section {
+  --stage-accent: var(--mint-strong);
+  --stage-soft: rgba(87, 211, 165, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.stage-section[data-stage='repeat'] {
+  --stage-accent: #e86645;
+  --stage-soft: rgba(255, 125, 92, 0.1);
+}
+
+.stage-section[data-stage='choice'] {
+  --stage-accent: #5e6fdd;
+  --stage-soft: rgba(123, 140, 255, 0.1);
+}
+
+.stage-section[data-stage='choice-loop'] {
+  --stage-accent: #c87b14;
+  --stage-soft: rgba(255, 182, 72, 0.14);
+}
+
+.stage-section[data-stage='mixed'] {
+  --stage-accent: var(--navy);
+  --stage-soft: rgba(16, 26, 46, 0.06);
+}
+
+.stage-heading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 13px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--stage-soft);
+}
+
+.stage-heading__num {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--stage-accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.stage-heading__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.stage-heading__eyebrow {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.stage-heading h3 {
+  margin: 1px 0 0;
+  font-size: 14px;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+}
+
+.stage-heading p {
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stage-heading__progress {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 104px;
+}
+
+.stage-heading__count {
+  color: var(--muted);
+  font-size: 9.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stage-heading__progress.is-done .stage-heading__count {
+  color: var(--mint-deep);
+}
+
+.stage-heading__bar {
+  display: block;
+  width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(16, 26, 46, 0.1);
+}
+
+.stage-heading__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--stage-accent);
+  transition: width 300ms ease;
+}
+
 .challenge-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 18px 22px 24px;
+  gap: 8px;
+  padding: 0;
 }
 
 .challenge-card {
@@ -1391,6 +1553,10 @@ a {
   margin: 0;
   font-size: 11px;
   font-weight: 700;
+}
+
+.teacher-meta__wide {
+  grid-column: 1 / -1;
 }
 
 .teacher-hint,
@@ -1984,9 +2150,29 @@ html.reduced-motion *::after {
     padding: 14px 16px 22px;
   }
 
+  .challenge-stages {
+    gap: 14px;
+    padding: 14px 16px 22px;
+  }
+
   .challenge-grid {
     grid-template-columns: 1fr;
-    padding: 14px 16px 22px;
+    padding: 0;
+  }
+
+  .stage-heading {
+    flex-wrap: wrap;
+  }
+
+  .stage-heading__progress {
+    flex-basis: 100%;
+    align-items: flex-start;
+    min-width: 0;
+    padding-left: 45px;
+  }
+
+  .stage-heading__bar {
+    width: 100%;
   }
 
   .teacher-grid {

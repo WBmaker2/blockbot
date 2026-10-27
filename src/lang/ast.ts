@@ -20,8 +20,10 @@ export type Statement =
 
 export interface Challenge {
   id: string;
+  stage: string;
   titleKo: string;
   subtitleKo?: string;
+  learningGoalKo: string;
   grid: { width: number; depth: number };
   robot: RobotState;
   goal: Cell;

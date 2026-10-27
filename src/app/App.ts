@@ -8,7 +8,7 @@ import { MAX_NESTING_DEPTH } from '../lang/limits';
 import { parseTextProgram, TextSyntaxError, formatProgram } from '../lang/textMode';
 import { BlockEditor } from '../blocks/workspace';
 import { SceneManager } from '../render/SceneManager';
-import { CHALLENGES, getChallenge, getChallengeIndex } from '../features/challenges';
+import { CHALLENGES, getChallenge, getChallengeIndex, getStage } from '../features/challenges';
 import { renderChallengeList } from '../features/challenges/ChallengePanel';
 import { starsForBlockCount, starsLabel } from '../features/challenges/scoring';
 import { buildWorksheet, renderTeacherPanel } from '../features/teacher';
@@ -227,8 +227,12 @@ export class App {
     this.refs.challengeNumber.textContent = String(
       getChallengeIndex(this.challenge.id) + 1
     ).padStart(2, '0');
+    const stage = getStage(this.challenge.stage);
     this.refs.challengeTitle.textContent = this.challenge.titleKo;
     this.refs.challengeSubtitle.textContent = this.challenge.subtitleKo ?? '';
+    this.refs.stageChip.textContent = `${stage.order}단계 · ${stage.titleKo}`;
+    this.refs.stageChip.dataset.stage = stage.id;
+    this.refs.learningGoal.textContent = this.challenge.learningGoalKo;
     this.refs.hudSize.textContent = `${this.challenge.grid.width} × ${this.challenge.grid.depth}`;
     this.refs.hintText.textContent = this.challenge.hintKo;
     this.refs.hintText.hidden = true;

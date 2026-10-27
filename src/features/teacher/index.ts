@@ -2,6 +2,7 @@ import type { Challenge, Direction, RobotState } from '../../lang/ast';
 import type { Preferences, ProgressData } from '../../storage/progress';
 import { renderSettings } from '../../ui/Settings';
 import { starsLabel } from '../challenges/scoring';
+import { getStage } from '../challenges/stages';
 
 export interface TeacherPanelOptions {
   container: HTMLElement;
@@ -36,6 +37,7 @@ export function renderTeacherPanel(options: TeacherPanelOptions): void {
   const challenge = challenges.find((candidate) => candidate.id === selectedId) ?? challenges[0];
   if (!challenge) return;
   const stars = progress.completed[challenge.id] ?? 0;
+  const stage = getStage(challenge.stage);
 
   container.innerHTML = `
     <div class="teacher-toolbar">
@@ -60,7 +62,7 @@ export function renderTeacherPanel(options: TeacherPanelOptions): void {
       <article class="teacher-card">
         <div class="teacher-card__head">
           <div>
-            <p class="eyebrow">${String(challenges.indexOf(challenge) + 1).padStart(2, '0')}번째 도전</p>
+            <p class="eyebrow">${stage.order}단계 · ${escapeHtml(stage.titleKo)}</p>
             <h3>${escapeHtml(challenge.titleKo)}</h3>
             <p>${escapeHtml(challenge.subtitleKo ?? '')}</p>
           </div>
@@ -72,6 +74,7 @@ export function renderTeacherPanel(options: TeacherPanelOptions): void {
           <div><dt>목표</dt><dd>(${challenge.goal.x}, ${challenge.goal.z})</dd></div>
           <div><dt>기준 블록</dt><dd>${challenge.parBlocks}개</dd></div>
           <div><dt>사용 블록</dt><dd>${challenge.allowedBlocks.map((block) => BLOCK_LABELS[block] ?? block).join(', ')}</dd></div>
+          <div class="teacher-meta__wide"><dt>학습 목표</dt><dd>${escapeHtml(challenge.learningGoalKo)}</dd></div>
         </dl>
         <p class="teacher-hint"><strong>힌트</strong> ${escapeHtml(challenge.hintKo)}</p>
         <p class="teacher-explanation"><strong>설명</strong> ${escapeHtml(challenge.explanationKo)}</p>
@@ -167,6 +170,7 @@ function escapeHtml(value: string): string {
 }
 
 export function buildWorksheet(challenge: Challenge): string {
+  const stage = getStage(challenge.stage);
   const walls = new Set(challenge.walls.map((cell) => `${cell.x},${cell.z}`));
   const cells: string[] = [];
   cells.push('<table class="worksheet-grid"><tbody>');
@@ -190,7 +194,8 @@ export function buildWorksheet(challenge: Challenge): string {
   return `
     <h1>BlockBot 학습지</h1>
     <h2>${escapeHtml(challenge.titleKo)}</h2>
-    <p>${escapeHtml(challenge.subtitleKo ?? '')}</p>
+    <p>${escapeHtml(stage.order + '단계 · ' + stage.titleKo)} · ${escapeHtml(challenge.subtitleKo ?? '')}</p>
+    <p><strong>학습 목표</strong> ${escapeHtml(challenge.learningGoalKo)}</p>
     <p><strong>미션</strong> 로봇을 목표 칸까지 움직이세요. 로봇은 화살표가 가리키는 방향을 바라보고 있어요.</p>
     <div class="worksheet-map">${cells.join('')}</div>
     <ul class="worksheet-legend">

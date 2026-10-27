@@ -54,6 +54,8 @@ test.describe('BlockBot play flow', () => {
   });
 
   test('shows coding blocks by default and toggles the palette', async ({ page }) => {
+    await expect(page.locator('#stage-chip')).toHaveText('1단계 · 순차');
+    await expect(page.locator('#learning-goal')).toContainText('차례대로');
     const flyout = page.locator('.blocklyFlyout:not(.blocklyTrashcanFlyout)');
     await expect(flyout).toBeVisible();
     await expect(page.locator('.blocklyFlyoutLabelText')).toHaveText('동작');
@@ -71,11 +73,31 @@ test.describe('BlockBot play flow', () => {
     await expect(page.locator('.blocklyFlyout .blocklyDraggable')).toHaveCount(1);
   });
 
+  test('groups challenges into five learning stages', async ({ page }) => {
+    await page.locator('#open-challenges').click();
+    await expect(page.locator('.stage-section')).toHaveCount(5);
+    await expect(page.locator('.challenge-card')).toHaveCount(15);
+    await expect(page.locator('.stage-heading h3')).toHaveText([
+      '순차',
+      '반복',
+      '선택',
+      '선택과 반복',
+      '종합'
+    ]);
+    await expect(
+      page.locator('.stage-section').first().locator('.stage-heading__count')
+    ).toHaveText('0 / 3 완료');
+    await expect(page.locator('.stage-section').last().locator('.stage-heading__count')).toHaveText(
+      '0 / 2 완료'
+    );
+  });
+
   test('shows repeat and condition blocks without an editor error', async ({ page }) => {
     await page.locator('#open-challenges').click();
     await page.locator('.challenge-card', { hasText: '마지막 미로' }).click();
 
     await expect(page.locator('#challenge-title')).toHaveText('마지막 미로');
+    await expect(page.locator('#stage-chip')).toHaveText('5단계 · 종합');
     await expect(page.locator('#block-count')).toContainText('블록 0 · 기준 11');
     await expect(page.locator('.blocklyFlyoutLabelText')).toHaveText(['동작', '반복', '조건']);
     await expect(page.locator('.blocklyFlyout .blocklyDraggable')).toHaveCount(6);
@@ -167,11 +189,11 @@ test.describe('BlockBot play flow', () => {
     await switchToText(page, 'move\nmove\nmove');
     await page.locator('#run-button').click();
     await expect(page.locator('#success-card')).toBeVisible({ timeout: 10_000 });
-    await expect(page.locator('#progress-count')).toHaveText('1 / 10');
+    await expect(page.locator('#progress-count')).toHaveText('1 / 15');
 
     await page.reload();
     await expect(page.locator('body')).toHaveAttribute('data-ready', 'true');
-    await expect(page.locator('#progress-count')).toHaveText('1 / 10');
+    await expect(page.locator('#progress-count')).toHaveText('1 / 15');
 
     await page.locator('#open-challenges').click();
     await expect(
@@ -182,7 +204,7 @@ test.describe('BlockBot play flow', () => {
     page.on('dialog', (dialog) => void dialog.accept());
     await page.locator('#open-teacher').click();
     await page.locator('[data-teacher="reset"]').click();
-    await expect(page.locator('#progress-count')).toHaveText('0 / 10');
+    await expect(page.locator('#progress-count')).toHaveText('0 / 15');
     await expect(page.locator('.toast')).toContainText('초기화');
   });
 
@@ -194,6 +216,8 @@ test.describe('BlockBot play flow', () => {
     await page.locator('[data-teacher="print"]').click();
     await expect(page.locator('#worksheet-print')).toContainText('BlockBot 학습지');
     await expect(page.locator('#worksheet-print')).toContainText('첫걸음');
+    await expect(page.locator('#worksheet-print')).toContainText('1단계 · 순차');
+    await expect(page.locator('#worksheet-print')).toContainText('학습 목표');
     await expect(page.locator('#worksheet-print .worksheet-grid td')).toHaveCount(25);
   });
 
